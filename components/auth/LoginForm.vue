@@ -28,7 +28,7 @@ function validate() {
 </script>
 
 <template>
-  <v-row class="d-flex mb-3">
+  <!-- <v-row class="d-flex mb-3">
     <v-col cols="6" sm="6" class="pr-2">
       <v-btn
         variant="outlined"
@@ -66,10 +66,10 @@ function validate() {
         >or sign in with</span
       >
     </div>
-  </div>
+  </div> -->
   <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
     <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
-      >Username</v-label
+      >Email</v-label
     >
     <VTextField
       v-model="username"
@@ -79,7 +79,7 @@ function validate() {
       hide-details="auto"
     ></VTextField>
     <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
-      >Password</v-label
+      >Mot de passe</v-label
     >
     <VTextField
       v-model="password"
@@ -97,13 +97,13 @@ function validate() {
         hide-details
         color="primary"
       >
-        <template v-slot:label class="">Remeber this Device</template>
+        <template v-slot:label class="">Se souvenir de moi &nbsp; </template>
       </v-checkbox>
       <div class="ml-sm-auto">
         <NuxtLink
           to=""
           class="text-primary text-decoration-none text-body-1 opacity-1 font-weight-medium"
-          >Forgot Password ?</NuxtLink
+          > Mot de passe oublié ?</NuxtLink
         >
       </div>
     </div>
@@ -115,7 +115,7 @@ function validate() {
       block
       type="submit"
       flat
-      >Sign In</v-btn
+      >Se connecter</v-btn
     >
     <div v-if="errors.apiError" class="mt-2">
       <v-alert color="error">{{ errors.apiError }}</v-alert>

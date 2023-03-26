@@ -4,8 +4,7 @@ import { RouterLink } from "vue-router";
 <template>
     <div class="logo">
       <NuxtLink to="/" class="d-flex">
-        <img src="/images/logos/dark-logo-icon.svg" />
-        <img src="/images/logos/dark-logo-text.svg" class="pl-3" />
+        <img src="/images/logos/logo-yendz.png" class="pl-3" />
       </NuxtLink>
     </div>
   </template>
