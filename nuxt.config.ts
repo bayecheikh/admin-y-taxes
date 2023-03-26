@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       title:
-        "AdminPro Nuxt 3 - Vuetify 3 - vite - Typescript Based Admin Dashboard Template",
+        "T-TAXES",
     },
   },
   nitro: {
