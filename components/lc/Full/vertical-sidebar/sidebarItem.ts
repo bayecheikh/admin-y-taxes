@@ -65,7 +65,7 @@ export interface menu {
 }
 
 const sidebarItem: menu[] = [
-  { header: 'Home' },
+  /* { header: 'Accueil' },
   {
     title: "Minimal",
     icon: FlagIcon,
@@ -85,16 +85,16 @@ const sidebarItem: menu[] = [
     title: "Modern",
     icon: ApertureIcon,
     to: "/dashboards/modern",
-  },
-  { header: "Apps" },
+  }, */
+  /* { header: "Modules" }, */
   {
-    title: "Contact",
+    title: "Utlisateurs",
     icon: BoxIcon,
-    to: "/apps/contacts",
+    to: "/utilisateurs",
     chip: "2",
     chipColor: "surface",
     chipBgColor: "secondary",
-  },
+  }/* ,
 
   {
     title: "Blog",
@@ -523,7 +523,7 @@ const sidebarItem: menu[] = [
     title: "Tabler",
     icon: BrandTablerIcon,
     to: "/icons/tabler",
-  },
+  }, */
 
 ];
 

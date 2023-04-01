@@ -23,7 +23,7 @@ import { profileDD } from "@/_mockApis/headerData";
             <img src="/images/profile/user2.jpg" width="80" />
           </v-avatar>
           <div class="ml-3">
-            <h6 class="text-h6 mb-n1">Julia Roberts</h6>
+            <h6 class="text-h6 mb-n1">Ndeye Bineta</h6>
             <span class="text-subtitle-1 font-weight-regular textSecondary"
               >Web Designer</span
             >
