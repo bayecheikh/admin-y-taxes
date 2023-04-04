@@ -1,6 +1,41 @@
 <script setup lang="ts">
 import { MailIcon } from "vue-tabler-icons";
 import { profileDD } from "@/_mockApis/headerData";
+import { ref } from "vue";
+
+// project imports
+
+import axios from '@/utils/axios';
+import axiosServices from '@/utils/axios';
+import { useUtilisateurStore } from '@/stores/apps/utilisateur';
+const store = useUtilisateurStore();
+const router = useRouter();
+const loading = ref(false);
+//const { $getUser } = useNuxtApp()
+const user = JSON.parse(localStorage.getItem('yendz_user') || '{}')?.user
+
+async function logout() {
+ 
+        await localStorage.removeItem('yendz_token')
+        await localStorage.removeItem('yendz_user')
+
+      router.push({ path: "/auth/login" });
+  
+    /* try {
+      //console.log("Données connexion ++ ",{identifier:username.value,password:password.value})
+       const response = await axiosServices.post('/users/auth/logout');
+       store.login({})
+      console.log("Reponse connexion ++ ",response)
+      if(response){
+        await localStorage.removeItem('yendz_token')
+        await localStorage.removeItem('yendz_user')
+      }
+      router.push({ path: "/auth/login" });
+    } catch (error) {
+        alert("Login ou mot de passe incorrect");
+        console.log(error);
+    } */
+}
 </script>
 
 <template>
@@ -11,7 +46,7 @@ import { profileDD } from "@/_mockApis/headerData";
     <template v-slot:activator="{ props }">
       <v-btn class="custom-hover-primary" variant="text" v-bind="props" icon>
         <v-avatar size="35">
-          <img src="/images/profile/user2.jpg" width="35" alt="Julia" />
+          <img src="/images/profile/user2.jpg" width="35" alt="" />
         </v-avatar>
       </v-btn>
     </template>
@@ -23,22 +58,22 @@ import { profileDD } from "@/_mockApis/headerData";
             <img src="/images/profile/user2.jpg" width="80" />
           </v-avatar>
           <div class="ml-3">
-            <h6 class="text-h6 mb-n1">Ndeye Bineta</h6>
+            <h6 class="text-h6 mb-n1">{{ user.first_name +' '+user.last_name}}</h6>
             <span class="text-subtitle-1 font-weight-regular textSecondary"
-              >Web Designer</span
+              ></span
             >
             <div class="d-flex align-center mt-1">
               <MailIcon size="18" stroke-width="1.5" />
               <span
                 class="text-subtitle-1 font-weight-regular textSecondary ml-2"
-                >info@modernize.com</span
+                >{{ user.email}}</span
               >
             </div>
           </div>
         </div>
         <v-divider></v-divider>
       </div>
-      <perfect-scrollbar style="height: calc(100vh - 240px); max-height: 240px">
+      <perfect-scrollbar style="">
         <v-list class="py-0 theme-list" lines="two">
           <v-list-item
             v-for="item in profileDD"
@@ -72,7 +107,7 @@ import { profileDD } from "@/_mockApis/headerData";
           </v-list-item>
         </v-list>
       </perfect-scrollbar>
-      <div class="px-8 py-3">
+     <!--  <div class="px-8 py-3">
         <div
           class="bg-lightprimary rounded-md pa-5 overflow-hidden position-relative"
         >
@@ -87,10 +122,10 @@ import { profileDD } from "@/_mockApis/headerData";
             class="right-pos-img"
           />
         </div>
-      </div>
+      </div> -->
       <div class="pt-4 pb-6 px-8 text-center">
-        <v-btn color="primary" variant="outlined" block to="/auth/login"
-          >Logout</v-btn
+        <v-btn color="primary" variant="outlined" block @click="logout" :loading="loading"
+          >Se deconnecter</v-btn
         >
       </div>
     </v-sheet>

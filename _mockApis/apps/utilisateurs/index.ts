@@ -32,7 +32,7 @@ const contacts: KeyedObject[] = [
     {
         id: '#452',
         avatar: user2,
-        userinfo: 'Ndeye Bineta',
+        userinfo: 'Steve',
         usermail: 'hgover@gmail.com',
         phone: '+234 456 789',
         jdate: '10-09-2014',

@@ -5,7 +5,18 @@ import { Form } from "vee-validate";
 /*Social icons*/
 import google from "/images/svgs/google-icon.svg";
 import facebook from "/images/svgs/facebook-icon.svg";
-
+// project imports
+import axios from '@/utils/axios';
+import axiosServices from '@/utils/axios';
+import { useUtilisateurStore } from '@/stores/apps/utilisateur';
+const store = useUtilisateurStore();
+onMounted(() => {
+   if(localStorage.getItem('yendz_token') && localStorage.getItem('yendz_user'))
+    router.push({ path: "/dashboards/modern" });
+});
+const getUser: any = computed(() => {
+    return store.user;
+});
 const router = useRouter();
 const checkbox = ref(false);
 const valid = ref(false);
@@ -19,11 +30,39 @@ const passwordRules = ref([
 ]);
 const emailRules = ref([
   (v: string) => !!v || "E-mail is required",
-  (v: string) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+  //(v: string) => /.+@.+\..+/.test(v) || "E-mail must be valid",
 ]);
 
 function validate() {
+  
   router.push({ path: "/dashboards/modern" });
+  //router.push({ path: "/dashboards/modern" });
+}
+// Fetch followers from action
+async function login() {
+    try {
+      //console.log("Données connexion ++ ",{identifier:username.value,password:password.value})
+       const response = await axiosServices.post('/users/auth/login',{identifier:username.value,password:password.value});
+       store.login(response.data)
+      console.log("Reponse connexion ++ ",response)
+      if(response.data.access_token){
+        await localStorage.setItem('yendz_token',response.data.access_token)
+        await localStorage.setItem('yendz_user',JSON.stringify(response.data))
+        router.push({ path: "/dashboards/modern" });
+      }
+        //router.push({ path: "/dashboards/modern" });
+        /* this.user = response.data.user;
+        this.permissions = response.data.permissions
+        this.access_token = response.data.access_token
+        this.refresh_token = response.data.refresh_token
+        this.token_type = response.data.token_type
+        this.expire_in = response.data.expire_in
+        this.control_organ_slug = response.data.control_organ_slug
+        this.touristic_establishment_id = response.data.touristic_establishment_id */
+    } catch (error) {
+        alert("Login ou mot de passe incorrect");
+        console.log(error);
+    }
 }
 </script>
 
@@ -67,7 +106,7 @@ function validate() {
       >
     </div>
   </div> -->
-  <Form @submit="validate" v-slot="{ errors, isSubmitting }" class="mt-5">
+  <Form @submit="login" v-slot="{ errors, isSubmitting }" class="mt-5">
     <v-label class="text-subtitle-1 font-weight-medium pb-2 text-lightText"
       >Email</v-label
     >

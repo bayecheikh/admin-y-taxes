@@ -1,16 +1,16 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useContactStore } from '@/stores/apps/contact';
+import { useUtilisateurStore } from '@/stores/apps/utilisateur';
 
-import contact from '@/_mockApis/apps/utilisateurs';
+import utilisateur from '@/_mockApis/apps/utilisateurs';
 import user1 from '/images/profile/user-1.jpg';
-const store = useContactStore();
+const store = useUtilisateurStore();
 
 onMounted(() => {
-    store.fetchContacts();
+    store.fetchUtilisateurs();
 });
-const getContacts: any = computed(() => {
-    return store.contacts;
+const getUtilisateurs: any = computed(() => {
+    return store.utilisateurs;
 });
 
 const valid = ref(true);
@@ -23,7 +23,7 @@ const regions = ref(['Dakar', 'Thiès']);
 const departements = ref(['Dakar', 'Pikine']);
 const entites = ref(['Entité 1']);
 const organes = ref(['Organe 1']);
-const desserts = ref(contact);
+const desserts = ref(utilisateur);
 const editedIndex = ref(-1);
 const editedItem = ref({
     id: '',
