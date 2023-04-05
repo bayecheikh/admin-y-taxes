@@ -4,6 +4,7 @@ import { useCustomizerStore } from '@/stores/customizer';
 import sidebarItems from './sidebarItem';
 const customizer = useCustomizerStore();
 const sidebarMenu = shallowRef(sidebarItems);
+const user = JSON.parse(localStorage.getItem('yendz_user') || '{}')?.user
 </script>
 
 <template>
@@ -25,8 +26,8 @@ const sidebarMenu = shallowRef(sidebarItems);
             <div class="sidebar_profile border-bottom">
                 <v-list class="bg-muted">
                     <v-list-item class="pa-4 ml-1">
-                        <v-list-item-title class="text-h6">Steve</v-list-item-title>
-                        <v-list-item-subtitle  class="text-subtitle-1">Web Designer</v-list-item-subtitle>
+                        <v-list-item-title class="text-h6">{{user.first_name}}</v-list-item-title>
+                        <v-list-item-subtitle  class="text-subtitle-1">{{user.email}}</v-list-item-subtitle>
                     <template v-slot:prepend class="me-0">
                         <v-avatar size="45" class="me-0">
                         <img src="/images/profile/user2.jpg" width="50" />

@@ -89,7 +89,7 @@ const sidebarItem: menu[] = [
   /* { header: "Modules" }, */
   {
     title: "Utlisateurs",
-    icon: BoxIcon,
+    icon: UserCircleIcon,
     to: "/utilisateurs",
     chip: "2",
     chipColor: "surface",
