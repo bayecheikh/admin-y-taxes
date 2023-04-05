@@ -94,26 +94,37 @@ const sidebarItem: menu[] = [
     chip: "2",
     chipColor: "surface",
     chipBgColor: "secondary",
-  }/* ,
+  }
+  ,
 
   {
-    title: "Blog",
+    title: "Données références",
     icon: ChartDonut3Icon,
-    to: "/blog",
+    to: "#",
     children: [
       {
-        title: "Posts",
+        title: "Pays",
         icon: CircleDotIcon,
-        to: "/apps/blog/posts",
+        to: "/payss",
       },
       {
-        title: "Detail",
+        title: "Régions",
         icon: CircleDotIcon,
-        to: "/apps/blog/early-black-friday-amazon-deals-cheap-tvs-headphones",
+        to: "/regions",
+      },
+      {
+        title: "Départements",
+        icon: CircleDotIcon,
+        to: "/departements",
+      },
+      {
+        title: "Type d'établissement",
+        icon: CircleDotIcon,
+        to: "/type_etablissements",
       },
     ],
   },
-  {
+  /* {
     title: "E-Commerce",
     icon: BasketIcon,
     to: "/ecommerce/",
