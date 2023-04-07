@@ -59,11 +59,11 @@ const getCart = computed(() => {
         <!-- ---------------------------------------------- -->
         <!-- ShoppingCart -->
         <!-- ---------------------------------------------- -->
-        <v-btn icon variant="text" color="primary" to="/apps/ecommerce/checkout">
+        <!-- <v-btn icon variant="text" color="primary" to="/apps/ecommerce/checkout">
             <v-badge color="error" :content="getCart?.length">
                 <ShoppingCartIcon stroke-width="1.5" size="22" />
             </v-badge>
-        </v-btn>
+        </v-btn> -->
 
         <!-- ------------------------------------------------>
         <!-- Notification -->

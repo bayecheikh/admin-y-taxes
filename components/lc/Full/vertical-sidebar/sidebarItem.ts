@@ -91,14 +91,33 @@ const sidebarItem: menu[] = [
     title: "Utlisateurs",
     icon: UserCircleIcon,
     to: "/utilisateurs",
-    chip: "2",
+    /* chip: "2",
     chipColor: "surface",
-    chipBgColor: "secondary",
+    chipBgColor: "secondary", */
   }
   ,
-
   {
-    title: "Données références",
+    title: "Pays",
+    icon: CircleDotIcon,
+    to: "/payss",
+  },
+  {
+    title: "Régions",
+    icon: CircleDotIcon,
+    to: "/regions",
+  },
+  {
+    title: "Départements",
+    icon: CircleDotIcon,
+    to: "/departements",
+  },
+  {
+    title: "Organes de controle",
+    icon: CircleDotIcon,
+    to: "/organe_controls",
+  },
+  /* {
+    title: "Références",
     icon: ChartDonut3Icon,
     to: "#",
     children: [
@@ -123,7 +142,7 @@ const sidebarItem: menu[] = [
         to: "/type_etablissements",
       },
     ],
-  },
+  }, */
   /* {
     title: "E-Commerce",
     icon: BasketIcon,
