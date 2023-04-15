@@ -1,25 +1,8 @@
 import { defineStore } from 'pinia';
 // project imports
 import axios from '@/utils/axios';
-import axiosServices from '@/utils/axiosServices';
+import axiosServices from '@/utils/axios';
 const router = useRouter();
-const listGraphql = `{
-    regions(sort:[NAME_ASC]){
-        pageInfo{
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
-        }
-        edges{
-          node{
-            id
-            name
-            isoCode
-          }
-        }
-    }
-}`;
 export const useregionStore = defineStore({
     id: 'region',
     state: () => ({
@@ -37,15 +20,5 @@ export const useregionStore = defineStore({
                 console.log(error);
             }
         }
-        /* async fetchregions() {
-            try {
-                const response = await axiosServices.post('/map/graphql/',{query:listGraphql});
-                this.regions = response.data?.data?.countries?.edges
-                console.log("Liste des region ++++++++++++", response.data.data.countries?.edges)
-            } catch (error) {
-                alert(error);
-                console.log(error);
-            }
-        } */
     }
 });

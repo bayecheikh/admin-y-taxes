@@ -6,8 +6,8 @@ import { Form } from "vee-validate";
 import google from "/images/svgs/google-icon.svg";
 import facebook from "/images/svgs/facebook-icon.svg";
 // project imports
-import axiosAuth from '@/utils/axios';
-import axiosServices from '@/utils/axiosServices';
+import axios from '@/utils/axios';
+import axiosServices from '@/utils/axios';
 import { useUtilisateurStore } from '@/stores/apps/utilisateur';
 const store = useUtilisateurStore();
 onMounted(() => {
@@ -42,7 +42,7 @@ function validate() {
 async function login() {
     try {
       //console.log("Données connexion ++ ",{identifier:username.value,password:password.value})
-       const response = await axiosAuth.post('/users/auth/login',{identifier:username.value,password:password.value});
+       const response = await axiosServices.post('/users/auth/login',{identifier:username.value,password:password.value});
        store.login(response.data)
       console.log("Reponse connexion ++ ",response)
       if(response.data.access_token){

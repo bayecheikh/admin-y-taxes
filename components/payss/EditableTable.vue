@@ -2,65 +2,80 @@
 import { ref, computed, onMounted } from 'vue';
 import { usepaysStore } from '@/stores/apps/pays';
 
+import pays from '@/_mockApis/apps/payss';
+import user1 from '/images/profile/user-1.jpg';
 const store = usepaysStore();
+
 onMounted(() => {
     store.fetchpayss();
 });
-
 const getpayss: any = computed(() => {
     return store.payss;
 });
-const listpayss = ref(getpayss)
 
 const valid = ref(true);
 const dialog = ref(false);
 const search = ref('');
-
-
-const editedIndex = ref(0);
+const rolesbg = ref(['primary', 'secondary', 'error', 'success', 'warning']);
+const roles = ref(['Super Admin', 'Staff', 'Superviseur']);
+//const pays = ref(['Sénégal', 'France']);
+const regions = ref(['Dakar', 'Thiès']);
+const departements = ref(['Dakar', 'Pikine']);
+const entites = ref(['Entité 1']);
+const organes = ref(['Organe 1']);
+const desserts = ref(pays);
+const editedIndex = ref(-1);
 const editedItem = ref({
-    isoCode: '',
-    name: '',
+    id: '',
+    avatar: user1,
+    userinfo: '',
+    usermail: '',
+    phone: '',
+    jdate: '',
+    role: '',
+    rolestatus: ''
 });
 const defaultItem = ref({
-    isoCode: '',
-    name: '',
+    id: '',
+    avatar: user1,
+    userinfo: '',
+    usermail: '',
+    phone: '',
+    jdate: '',
+    role: '',
+    rolestatus: ''
 });
 
 //Methods
 const filteredList = computed(() => {
-    return listpayss.value.filter((pays: any) => {
-        return pays.node.name.toLowerCase().includes(search.value.toLowerCase());
+    return desserts.value.filter((user: any) => {
+        return user.userinfo.toLowerCase().includes(search.value.toLowerCase());
     });
 });
 
 function editItem(item: any) {
-    console.log(listpayss.value.indexOf(item))
-    editedIndex.value = 1;
+    editedIndex.value = desserts.value.indexOf(item);
     editedItem.value = Object.assign({}, item);
     dialog.value = true;
 }
 function deleteItem(item: any) {
-   // const index = listpayss.value.indexOf(item);
-    confirm('Are you sure you want to delete this item?') && store.deletepayss(item);
+    const index = desserts.value.indexOf(item);
+    confirm('Are you sure you want to delete this item?') && desserts.value.splice(index, 1);
 }
 
 function close() {
     dialog.value = false;
     setTimeout(() => {
         editedItem.value = Object.assign({}, defaultItem.value);
-        editedIndex.value = 0;
+        editedIndex.value = -1;
     }, 300);
 }
-
 function save() {
-    if (editedIndex.value ==1) {
-        store.updatepayss(editedItem.value)
+    if (editedIndex.value > -1) {
+        Object.assign(desserts.value[editedIndex.value], editedItem.value);
     } else {
-        store.addpayss(editedItem.value)
-        
+        desserts.value.push(editedItem.value);
     }
-    editedIndex.value = 0;
     close();
 }
 
@@ -89,15 +104,15 @@ const formTitle = computed(() => {
                     <v-card-text>
                         <v-form ref="form" v-model="valid" lazy-validation>
                             <v-row>
-                                <v-col cols="12" lg="6" md="6" sm="12">
-                                    <v-text-field variant="outlined" hide-details v-model="editedItem.isoCode" label="Iso Code"></v-text-field>
-                                </v-col>
                                 <v-col cols="12" lg="12" md="12" sm="12">
+                                    <v-text-field variant="outlined" hide-details v-model="editedItem.id" label="Code"></v-text-field>
+                                </v-col>
+                                <v-col cols="12" lg="6" md="6" sm="12">
                                     <v-text-field
                                         variant="outlined"
                                         hide-details
-                                        v-model="editedItem.name"
-                                        label="Name"
+                                        v-model="editedItem.userinfo"
+                                        label="Nom du pays"
                                     ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -109,7 +124,7 @@ const formTitle = computed(() => {
                         <v-btn color="error" @click="close">Cancel</v-btn>
                         <v-btn
                             color="secondary"
-                            :disabled="editedItem.name == ''"
+                            :disabled="editedItem.userinfo == ''"
                             variant="flat"
                             @click="save"
                             >Save</v-btn
@@ -130,13 +145,13 @@ const formTitle = computed(() => {
             </tr>
         </thead>
         <tbody>
-            <tr v-for="item in filteredList" :key="item.node.isoCode">
-                <td class="text-subtitle-1">{{ item.node.isoCode }}</td>
+            <tr v-for="item in filteredList" :key="item.id">
+                <td class="text-subtitle-1">{{ item.id }}</td>
                 <td>
                     <div class="d-flex align-center py-4">
 
                         <div class="ml-5">
-                            <h4 class="text-h6 text-no-wrap">{{ item.node.name }}</h4>                           
+                            <h4 class="text-h6 text-no-wrap">{{ item.userinfo }}</h4>                           
                         </div>
                     </div>
                 </td>
@@ -145,14 +160,14 @@ const formTitle = computed(() => {
                     <div class="d-flex align-center">
                         <v-tooltip text="Edit">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon flat @click="editItem(item.node)" v-bind="props"
+                                <v-btn icon flat @click="editItem(item)" v-bind="props"
                                     ><PencilIcon stroke-width="1.5" size="20" class="text-primary"
                                 /></v-btn>
                             </template>
                         </v-tooltip>
                         <v-tooltip text="Delete">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon flat @click="deleteItem(item.node)" v-bind="props"
+                                <v-btn icon flat @click="deleteItem(item)" v-bind="props"
                                     ><TrashIcon stroke-width="1.5" size="20" class="text-error"
                                 /></v-btn>
                             </template>

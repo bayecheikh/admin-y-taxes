@@ -13,7 +13,7 @@ const config: ConfigProps = {
     Customizer_drawer: false,
     mini_sidebar: false,
     setHorizontalLayout: false, // Horizontal layout
-    actTheme: 'ORANGE_THEME',
+    actTheme: 'BLUE_THEME',
     boxed: true,
     setBorderCard: false
 };
