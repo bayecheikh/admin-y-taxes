@@ -54,11 +54,11 @@ function close() {
 }
 
 function save() {
+    console.log(editedIndex.value)
     if (editedIndex.value ==1) {
         store.updatepayss(editedItem.value)
     } else {
-        store.addpayss(editedItem.value)
-        
+        store.addpayss(editedItem.value)       
     }
     editedIndex.value = 0;
     close();

@@ -4,20 +4,20 @@ import axios from '@/utils/axios';
 import axiosServices from '@/utils/axiosServices';
 const router = useRouter();
 const listGraphql = `{
-    regions(sort:[NAME_ASC]){
-        pageInfo{
-          hasNextPage
-          hasPreviousPage
-          startCursor
-          endCursor
-        }
-        edges{
-          node{
+    regions{
+      edges{
+        node{
+          id
+          name
+          code
+          countryId
+          country{
             id
             name
             isoCode
-          }
+          }        
         }
+      }
     }
 }`;
 export const useregionStore = defineStore({
@@ -28,7 +28,7 @@ export const useregionStore = defineStore({
     getters: {},
     actions: {
         // Fetch followers from action
-        async fetchregions() {
+        /* async fetchregions() {
             try {
                 const response = await axios.get('/api/regions');
                 this.regions = response.data.regions;
@@ -36,16 +36,88 @@ export const useregionStore = defineStore({
                 alert(error);
                 console.log(error);
             }
-        }
-        /* async fetchregions() {
-            try {
+        } */
+        async fetchregions() {
+            /* try {
                 const response = await axiosServices.post('/map/graphql/',{query:listGraphql});
-                this.regions = response.data?.data?.countries?.edges
-                console.log("Liste des region ++++++++++++", response.data.data.countries?.edges)
+                this.regions = response.data?.data?.controlOrgans?.edges
+                console.log("Liste des region ++++++++++++", response)
             } catch (error) {
                 alert(error);
                 console.log(error);
-            }
-        } */
+            } */
+        },
+        async addregions(payload:any) {
+          try {
+              const response = await axiosServices.post('/map/graphql/',
+              {
+                  query:`mutation{
+                      registerControlOrgan(address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
+                          code
+                          message
+                          success
+                          controlOrgan{
+                            id
+                            name
+                          }
+                      }
+                      
+                  }`
+              });
+              console.log("Resultat ajout ++++++++++++", response)
+              this.fetchregions()
+              
+          } catch (error) {
+              alert(error);
+              console.log(error);
+          }
+      },
+      async updateregions(payload:any) {
+          try {
+              const response = await axiosServices.post('/map/graphql/',
+              {
+                  query:`mutation{
+                      updateControlOrgan(identifier:"${parseInt(payload.id)}",isActive:"${payload.isActive}",ownerId:"${payload.ownerId}",address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
+                          code
+                          message
+                          success
+                          country{
+                              id
+                              name
+                              isoCode
+                          }
+                      }
+                      
+                  }`
+              });
+              console.log("Resultat update ++++++++++++", response)
+              this.fetchregions()
+              
+          } catch (error) {
+              alert(error);
+              console.log(error);
+          }
+      },
+      async deleteregions(payload:any) {
+          try {
+              const response = await axiosServices.post('/map/graphql/',
+              {
+                  query:`mutation{
+                      deleteControlOrgan(identifier:"${parseInt(payload.id)}"){
+                          code
+                          message
+                          success
+                      }
+                      
+                  }`
+              });
+              console.log("Resultat supression ++++++++++++", response)
+              this.fetchregions()
+              
+          } catch (error) {
+              alert(error);
+              console.log(error);
+          }
+      }
     }
 });

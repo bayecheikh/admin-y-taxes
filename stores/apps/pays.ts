@@ -12,12 +12,32 @@ const listGraphql = `{
           endCursor
         }
         edges{
-          node{
-            id
-            name
-            isoCode
+      node{
+        id
+        name
+        isoCode
+        createdAt
+        updatedAt
+        regions{
+          edges{
+            node{
+              id
+              name
+              code
+              departments{
+                edges{
+                  node{
+                    id
+                    name
+                    code
+                  }
+                }
+              }
+            }
           }
         }
+      }
+    }
     }
 }`;
 export const usepaysStore = defineStore({

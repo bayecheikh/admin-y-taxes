@@ -34,13 +34,13 @@ export const useUtilisateurStore = defineStore({
     actions: {
         // Fetch followers from action
         async fetchUtilisateurs() {
-            try {
+            /* try {
                 const response = await axios.get('/api/utilisateurs');
                 this.utilisateurs = response.data.utilisateurs;
             } catch (error) {
                 alert(error);
                 console.log(error);
-            }
+            } */
         },
         // Fetch followers from action
         async fetchMe(id:any) {

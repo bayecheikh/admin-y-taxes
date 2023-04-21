@@ -65,6 +65,78 @@ export const useorgane_controlStore = defineStore({
                 alert(error);
                 console.log(error);
             }
-        }
+        },
+        async addorgane_controls(payload:any) {
+          try {
+              const response = await axiosServices.post('/map/graphql/',
+              {
+                  query:`mutation{
+                      registerControlOrgan(address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
+                          code
+                          message
+                          success
+                          controlOrgan{
+                            id
+                            name
+                          }
+                      }
+                      
+                  }`
+              });
+              console.log("Resultat ajout ++++++++++++", response)
+              this.fetchorgane_controls()
+              
+          } catch (error) {
+              alert(error);
+              console.log(error);
+          }
+      },
+      async updateorgane_controls(payload:any) {
+          try {
+              const response = await axiosServices.post('/map/graphql/',
+              {
+                  query:`mutation{
+                      updateControlOrgan(identifier:"${parseInt(payload.id)}",isActive:"${payload.isActive}",ownerId:"${payload.ownerId}",address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
+                          code
+                          message
+                          success
+                          country{
+                              id
+                              name
+                              isoCode
+                          }
+                      }
+                      
+                  }`
+              });
+              console.log("Resultat update ++++++++++++", response)
+              this.fetchorgane_controls()
+              
+          } catch (error) {
+              alert(error);
+              console.log(error);
+          }
+      },
+      async deleteorgane_controls(payload:any) {
+          try {
+              const response = await axiosServices.post('/map/graphql/',
+              {
+                  query:`mutation{
+                      deleteControlOrgan(identifier:"${parseInt(payload.id)}"){
+                          code
+                          message
+                          success
+                      }
+                      
+                  }`
+              });
+              console.log("Resultat supression ++++++++++++", response)
+              this.fetchorgane_controls()
+              
+          } catch (error) {
+              alert(error);
+              console.log(error);
+          }
+      }
     }
 });

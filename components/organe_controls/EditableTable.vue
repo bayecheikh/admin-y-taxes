@@ -1,51 +1,55 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { useorgane_controlStore } from '@/stores/apps/organe_control';
+import { usepaysStore } from '@/stores/apps/pays';
 
-import organe_control from '@/_mockApis/apps/organe_controls';
-import user1 from '/images/profile/user-1.jpg';
+
 const store = useorgane_controlStore();
-
+const storePays = usepaysStore();
 onMounted(() => {
     store.fetchorgane_controls();
+    storePays.fetchpayss();
 });
 const getorgane_controls: any = computed(() => {
     return store.organe_controls;
 });
+const getpayss: any = computed(() => {
+    return storePays.payss;
+});
+const listpayss = ref(getpayss)
+const listregions = ref([])
+const listdepartements = ref([])
+
+const selectedPays = ref({})
+const selectedRegion = ref({})
+const selectedDepartement = ref({})
 
 const valid = ref(true);
 const dialog = ref(false);
 const search = ref('');
-const rolesbg = ref(['primary', 'secondary', 'error', 'success', 'warning']);
-const roles = ref(['Super Admin', 'Staff', 'Superviseur']);
+
 //const organe_control = ref(['Sénégal', 'France']);
-const regions = ref(['Dakar', 'Thiès']);
-const departements = ref(['Dakar', 'Pikine']);
-const entites = ref(['Entité 1']);
-const organes = ref(['Organe 1']);
-const desserts = ref(organe_control);
+
 const listorgane_controls = ref(getorgane_controls)
-const editedIndex = ref(-1);
-const router = useRouter();
+const editedIndex = ref(0);
+
 const editedItem = ref({
-    id: '',
-    avatar: user1,
-    userinfo: '',
-    usermail: '',
+    address: '',
+    countryId: '',
+    departmentId: '',
+    name: '',
     phone: '',
-    jdate: '',
-    role: '',
-    rolestatus: ''
+    picture: '',
+    regionId: ''
 });
 const defaultItem = ref({
-    id: '',
-    avatar: user1,
-    userinfo: '',
-    usermail: '',
+    address: '',
+    countryId: '',
+    departmentId: '',
+    name: '',
     phone: '',
-    jdate: '',
-    role: '',
-    rolestatus: ''
+    picture: '',
+    regionId: ''
 });
 
 //Methods
@@ -55,17 +59,15 @@ const filteredList = computed(() => {
     });
 });
 
-function detailItem(item: any) {
-    router.push('/organe_controls/detail/'+item.node.id);
-}
+
 function editItem(item: any) {
-    editedIndex.value = listorgane_controls.value.indexOf(item);
+    console.log(listorgane_controls.value.indexOf(item))
+    editedIndex.value = 1;
     editedItem.value = Object.assign({}, item);
     dialog.value = true;
 }
 function deleteItem(item: any) {
-    const index = desserts.value.indexOf(item);
-    confirm('Are you sure you want to delete this item?') && desserts.value.splice(index, 1);
+    confirm('Are you sure you want to delete this item?') && store.deleteorgane_controls(item);
 }
 
 function close() {
@@ -76,11 +78,13 @@ function close() {
     }, 300);
 }
 function save() {
-    if (editedIndex.value > -1) {
-        Object.assign(desserts.value[editedIndex.value], editedItem.value);
+    console.log(editedIndex.value)
+    if (editedIndex.value ==1) {
+        store.updateorgane_controls(editedItem.value)
     } else {
-        desserts.value.push(editedItem.value);
+        store.addorgane_controls(editedItem.value)       
     }
+    editedIndex.value = 0;
     close();
 }
 
@@ -109,16 +113,79 @@ const formTitle = computed(() => {
                     <v-card-text>
                         <v-form ref="form" v-model="valid" lazy-validation>
                             <v-row>
-                                <v-col cols="12" lg="12" md="12" sm="12">
-                                    <v-text-field variant="outlined" hide-details v-model="editedItem.id" label="Code"></v-text-field>
+                                <v-col cols="12" lg="6" md="6" sm="12">
+                                    <v-text-field
+                                        variant="outlined"
+                                        hide-details
+                                        v-model="editedItem.name"
+                                        label="Nom"
+                                    ></v-text-field>
                                 </v-col>
                                 <v-col cols="12" lg="6" md="6" sm="12">
                                     <v-text-field
                                         variant="outlined"
                                         hide-details
-                                        v-model="editedItem.userinfo"
-                                        label="Nom du organe_control"
+                                        v-model="editedItem.phone"
+                                        label="Phone"
                                     ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" lg="6" md="6" sm="12">
+                                    <v-text-field
+                                        variant="outlined"
+                                        hide-details
+                                        v-model="editedItem.address"
+                                        label="Address"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" lg="6" md="6" sm="12">
+                                    <v-text-field
+                                        variant="outlined"
+                                        hide-details
+                                        v-model="editedItem.picture"
+                                        label="Picture"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" sm="12">
+                                    <v-autocomplete 
+                                        :v-model="selectedPays"
+                                        :items="listpayss" 
+                                        color="primary" 
+                                        label="Pays"
+                                        item-title="node.name"
+                                        item-value="node.id"
+                                        
+                                        variant="outlined"
+                                       
+                                        hide-details>
+                                        </v-autocomplete>
+                                </v-col>
+                                <v-col cols="12" sm="12">
+                                    <v-autocomplete 
+                                        :v-model="selectedRegion"
+                                        :items="listpayss" 
+                                        color="primary" 
+                                        label="Région"
+                                        item-title="node.name"
+                                        item-value="node.id"
+                                        
+                                        variant="outlined"
+                                       
+                                        hide-details>
+                                        </v-autocomplete>
+                                </v-col>
+                                <v-col cols="12" sm="12">
+                                    <v-autocomplete 
+                                        :v-model="selectedDepartement"
+                                        :items="listpayss" 
+                                        color="primary" 
+                                        label="Département"
+                                        item-title="node.name"
+                                        item-value="node.id"
+                                        
+                                        variant="outlined"
+                                       
+                                        hide-details>
+                                        </v-autocomplete>
                                 </v-col>
                             </v-row>
                         </v-form>
@@ -129,7 +196,7 @@ const formTitle = computed(() => {
                         <v-btn color="error" @click="close">Cancel</v-btn>
                         <v-btn
                             color="secondary"
-                            :disabled="editedItem.userinfo == ''"
+                            :disabled="editedItem.name == ''"
                             variant="flat"
                             @click="save"
                             >Save</v-btn
@@ -217,14 +284,14 @@ const formTitle = computed(() => {
                         </v-tooltip> -->
                         <v-tooltip text="Edit">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon flat @click="editItem(item)" v-bind="props"
+                                <v-btn icon flat @click="editItem(item.node)" v-bind="props"
                                     ><PencilIcon stroke-width="1.5" size="20" class="text-primary"
                                 /></v-btn>
                             </template>
                         </v-tooltip>
                         <v-tooltip text="Delete">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon flat @click="deleteItem(item)" v-bind="props"
+                                <v-btn icon flat @click="deleteItem(item.node)" v-bind="props"
                                     ><TrashIcon stroke-width="1.5" size="20" class="text-error"
                                 /></v-btn>
                             </template>

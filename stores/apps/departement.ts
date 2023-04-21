@@ -12,13 +12,13 @@ export const usedepartementStore = defineStore({
     actions: {
         // Fetch followers from action
         async fetchdepartements() {
-            try {
+            /* try {
                 const response = await axios.get('/api/departements');
                 this.departements = response.data.departements;
             } catch (error) {
                 alert(error);
                 console.log(error);
-            }
+            } */
         }
     }
 });
