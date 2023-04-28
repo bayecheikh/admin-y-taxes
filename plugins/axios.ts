@@ -17,11 +17,11 @@ export default defineNuxtPlugin((nuxtApp) => {
   }        
   );
 
-  // interceptor for http
-  axiosAuth.interceptors.response.use(
+   // interceptor for http
+   axiosAuth.interceptors.response.use(
     (response) => response,
     (error) =>
-      Promise.reject((error.response && error.response.data) || "Wrong S)
+      Promise.reject((error.response && error.response.data) || "Wrong Services")
   );
 
   return {
