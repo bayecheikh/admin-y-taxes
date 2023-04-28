@@ -1,68 +1,81 @@
 import { defineStore } from 'pinia';
 // project imports
 import axios from '@/utils/axios';
-import axiosServices from '@/utils/axios';
+import axiosServices from '@/utils/axiosServices';
 const router = useRouter();
-<<<<<<< HEAD
-=======
 const listGraphql = `{
-    regions(sort:[ID_ASC]){
+    controlOrgans{
       edges{
         node{
           id
           name
-          code
+          slug
+          isActive
+          picture
+          address
           countryId
+          regionId
+          departmentId
+          phone
+          ownerId
+          createdBy
           country{
             id
             name
             isoCode
-          }        
+          }
+          region{
+            id
+            name
+            code
+          }
+          department{
+            id
+            name
+            code
+          }
+          
         }
       }
     }
 }`;
->>>>>>> crud-base
-export const useregionStore = defineStore({
-    id: 'region',
+export const useorgane_controlStore = defineStore({
+    id: 'organe_control',
     state: () => ({
-        regions: [],
+        organe_controls: [],
     }),
     getters: {},
     actions: {
         // Fetch followers from action
-        /* async fetchregions() {
+        /* async fetchorgane_controls() {
             try {
-                const response = await axios.get('/api/regions');
-                this.regions = response.data.regions;
+                const response = await axios.get('/api/organe_controls');
+                this.organe_controls = response.data.organe_controls;
             } catch (error) {
                 alert(error);
                 console.log(error);
             }
-<<<<<<< HEAD
-        }
-=======
         } */
-        async fetchregions() {
+        async fetchorgane_controls() {
             try {
-                const response = await axiosServices.post('/map/graphql/',{query:listGraphql});
-                this.regions = response.data?.data?.regions?.edges
-                console.log("Liste des regions ++++++++++++", response)
+                const response = await axiosServices.post('/core/graphql/',{query:listGraphql});
+                this.organe_controls = response.data?.data?.controlOrgans?.edges
+                console.log("Liste des organe_control ++++++++++++", response)
             } catch (error) {
                 alert(error);
                 console.log(error);
             }
         },
-        async addregions(payload:any) {
+        async addorgane_controls(payload:any) {
           try {
               const response = await axiosServices.post('/map/graphql/',
               {
                   query:`mutation{
-                      registerRegion(countryId:"${payload.countryId}",name:"${payload.name}",code:"${payload.code}"){
+                      registerControlOrgan(address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
                           code
                           message
                           success
-                          region{
+                          controlOrgan{
                             id
                             name
                           }
@@ -71,45 +84,45 @@ export const useregionStore = defineStore({
                   }`
               });
               console.log("Resultat ajout ++++++++++++", response)
-              this.fetchregions()
+              this.fetchorgane_controls()
               
           } catch (error) {
               alert(error);
               console.log(error);
           }
       },
-      async updateregions(payload:any) {
+      async updateorgane_controls(payload:any) {
           try {
               const response = await axiosServices.post('/map/graphql/',
               {
                   query:`mutation{
-                      updateRegion(id:"${parseInt(payload.id)}",countryId:"${payload.countryId}",name:"${payload.name}",code:"${payload.code}"){
+                      updateControlOrgan(identifier:"${parseInt(payload.id)}",isActive:"${payload.isActive}",ownerId:"${payload.ownerId}",address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
                           code
                           message
                           success
-                          region{
+                          country{
                               id
                               name
-                              code
+                              isoCode
                           }
                       }
                       
                   }`
               });
               console.log("Resultat update ++++++++++++", response)
-              this.fetchregions()
+              this.fetchorgane_controls()
               
           } catch (error) {
               alert(error);
               console.log(error);
           }
       },
-      async deleteregions(payload:any) {
+      async deleteorgane_controls(payload:any) {
           try {
               const response = await axiosServices.post('/map/graphql/',
               {
                   query:`mutation{
-                      deleteRegion(id:"${parseInt(payload.id)}"){
+                      deleteControlOrgan(identifier:"${parseInt(payload.id)}"){
                           code
                           message
                           success
@@ -118,13 +131,12 @@ export const useregionStore = defineStore({
                   }`
               });
               console.log("Resultat supression ++++++++++++", response)
-              this.fetchregions()
+              this.fetchorgane_controls()
               
           } catch (error) {
               alert(error);
               console.log(error);
           }
       }
->>>>>>> crud-base
     }
 });

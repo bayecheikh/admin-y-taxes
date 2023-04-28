@@ -1,63 +1,73 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { useregionStore } from '@/stores/apps/region';
+import { useorgane_controlStore } from '@/stores/apps/organe_control';
 import { usepaysStore } from '@/stores/apps/pays';
 
 
-const store = useregionStore();
+const store = useorgane_controlStore();
 const storePays = usepaysStore();
 onMounted(() => {
-    store.fetchregions();
+    store.fetchorgane_controls();
     storePays.fetchpayss();
 });
-const getregions: any = computed(() => {
-    return store.regions;
+const getorgane_controls: any = computed(() => {
+    return store.organe_controls;
 });
 const getpayss: any = computed(() => {
     return storePays.payss;
 });
 const listpayss = ref(getpayss)
+const listregions = ref([])
+const listdepartements = ref([])
 
-
-const selectedPays = null
+const selectedPays = ref({})
 const selectedRegion = ref({})
+const selectedDepartement = ref({})
 
 const valid = ref(true);
 const dialog = ref(false);
 const search = ref('');
 
-//const region = ref(['Sénégal', 'France']);
+//const organe_control = ref(['Sénégal', 'France']);
 
-const listregions = ref(getregions)
+const listorgane_controls = ref(getorgane_controls)
 const editedIndex = ref(0);
 
 const editedItem = ref({
-    code: '',
+    address: '',
     countryId: '',
-    name: ''
+    departmentId: '',
+    name: '',
+    phone: '',
+    picture: '',
+    regionId: ''
 });
 const defaultItem = ref({
-    code: '',
+    address: '',
     countryId: '',
-    name: ''
+    departmentId: '',
+    name: '',
+    phone: '',
+    picture: '',
+    regionId: ''
 });
 
 //Methods
 const filteredList = computed(() => {
-    return listregions.value.filter((user: any) => {
+    return listorgane_controls.value.filter((user: any) => {
         return user.node.name.toLowerCase().includes(search.value.toLowerCase());
     });
 });
 
 
 function editItem(item: any) {
-    console.log(listregions.value.indexOf(item))
+    console.log(listorgane_controls.value.indexOf(item))
     editedIndex.value = 1;
     editedItem.value = Object.assign({}, item);
     dialog.value = true;
 }
 function deleteItem(item: any) {
-    confirm('Are you sure you want to delete this item?') && store.deleteregions(item);
+    confirm('Are you sure you want to delete this item?') && store.deleteorgane_controls(item);
 }
 
 function close() {
@@ -70,18 +80,14 @@ function close() {
 function save() {
     console.log(editedIndex.value)
     if (editedIndex.value ==1) {
-        store.updateregions(editedItem.value)
+        store.updateorgane_controls(editedItem.value)
     } else {
-        store.addregions(editedItem.value)       
+        store.addorgane_controls(editedItem.value)       
     }
     editedIndex.value = 0;
     close();
 }
 
-
-const changePays = () => {
-  console.log(selectedPays)
-}
 //Computed Property
 const formTitle = computed(() => {
     return editedIndex.value === -1 ? 'Ajouter un organe de contrôle' : 'Modifier un organe de contrôle';
@@ -90,13 +96,13 @@ const formTitle = computed(() => {
 <template>
     <v-row>
         <v-col cols="12" lg="4" md="6">
-            <v-text-field density="compact" v-model="search" label="Rechercher une région" hide-details variant="outlined"></v-text-field>
+            <v-text-field density="compact" v-model="search" label="Rechercher un organe de contrôle" hide-details variant="outlined"></v-text-field>
         </v-col>
         <v-col cols="12" lg="8" md="6" class="text-sm-right">
             <v-dialog v-model="dialog" max-width="500">
                 <template v-slot:activator="{ props }">
                     <v-btn color="primary" v-bind="props" flat class="ml-auto">
-                        <v-icon class="mr-2">mdi-account-multiple-plus</v-icon>Ajouter une région
+                        <v-icon class="mr-2">mdi-account-multiple-plus</v-icon>Ajouter un organe de contrôle
                     </v-btn>
                 </template>
                 <v-card>
@@ -119,22 +125,65 @@ const formTitle = computed(() => {
                                     <v-text-field
                                         variant="outlined"
                                         hide-details
-                                        v-model="editedItem.code"
-                                        label="Code"
+                                        v-model="editedItem.phone"
+                                        label="Phone"
                                     ></v-text-field>
                                 </v-col>
-                               
+                                <v-col cols="12" lg="6" md="6" sm="12">
+                                    <v-text-field
+                                        variant="outlined"
+                                        hide-details
+                                        v-model="editedItem.address"
+                                        label="Address"
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col cols="12" lg="6" md="6" sm="12">
+                                    <v-text-field
+                                        variant="outlined"
+                                        hide-details
+                                        v-model="editedItem.picture"
+                                        label="Picture"
+                                    ></v-text-field>
+                                </v-col>
                                 <v-col cols="12" sm="12">
                                     <v-autocomplete 
-                                        :v-model:selectedPays="selectedPays"
+                                        :v-model="selectedPays"
                                         :items="listpayss" 
                                         color="primary" 
                                         label="Pays"
                                         item-title="node.name"
                                         item-value="node.id"
-                                        @update:selectedPays="changePays"
+                                        
                                         variant="outlined"
-                                       return-object
+                                       
+                                        hide-details>
+                                        </v-autocomplete>
+                                </v-col>
+                                <v-col cols="12" sm="12">
+                                    <v-autocomplete 
+                                        :v-model="selectedRegion"
+                                        :items="listpayss" 
+                                        color="primary" 
+                                        label="Région"
+                                        item-title="node.name"
+                                        item-value="node.id"
+                                        
+                                        variant="outlined"
+                                       
+                                        hide-details>
+                                        </v-autocomplete>
+                                </v-col>
+                                <v-col cols="12" sm="12">
+                                    <v-autocomplete 
+                                        :v-model="selectedDepartement"
+                                        :items="listpayss" 
+                                        color="primary" 
+                                        label="Département"
+                                        item-title="node.name"
+                                        item-value="node.id"
+                                        
+                                        variant="outlined"
+                                       
                                         hide-details>
                                         </v-autocomplete>
                                 </v-col>
@@ -162,9 +211,9 @@ const formTitle = computed(() => {
             <tr>
                 <!-- <th class="text-subtitle-1 font-weight-semibold">Id</th> -->
                 <!-- <th class="text-subtitle-1 font-weight-semibold">Code</th> -->
-                <th class="text-subtitle-1 font-weight-semibold">Code</th>
-                <!-- <th class="text-subtitle-1 font-weight-semibold">Téléphone</th> -->
                 <th class="text-subtitle-1 font-weight-semibold">Nom</th>
+                <!-- <th class="text-subtitle-1 font-weight-semibold">Téléphone</th> -->
+                <th class="text-subtitle-1 font-weight-semibold">Adresse</th>
                 <!-- <th class="text-subtitle-1 font-weight-semibold">Département</th>
                 <th class="text-subtitle-1 font-weight-semibold">Région</th> -->
                 <th class="text-subtitle-1 font-weight-semibold">Pays</th>
@@ -179,7 +228,7 @@ const formTitle = computed(() => {
                     <div class="d-flex align-center py-4">
 
                         <div class="ml-5">
-                            <h4 class="text-h6 text-no-wrap">{{ item.node.code || ''}}</h4>                           
+                            <h4 class="text-h6 text-no-wrap">{{ item.node.name || ''}}</h4>                           
                         </div>
                     </div>
                 </td>
@@ -195,7 +244,7 @@ const formTitle = computed(() => {
                     <div class="d-flex align-center py-4">
 
                         <div class="ml-5">
-                            <h4 class="text-h6 text-no-wrap">{{ item.node.name || ''}}</h4>                           
+                            <h4 class="text-h6 text-no-wrap">{{ item.node.address || ''}}</h4>                           
                         </div>
                     </div>
                 </td>

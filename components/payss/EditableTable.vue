@@ -71,10 +71,18 @@ function close() {
     }, 300);
 }
 function save() {
+<<<<<<< HEAD
     if (editedIndex.value > -1) {
         Object.assign(desserts.value[editedIndex.value], editedItem.value);
     } else {
         desserts.value.push(editedItem.value);
+=======
+    console.log(editedIndex.value)
+    if (editedIndex.value ==1) {
+        store.updatepayss(editedItem.value)
+    } else {
+        store.addpayss(editedItem.value)       
+>>>>>>> crud-base
     }
     close();
 }
