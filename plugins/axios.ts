@@ -21,7 +21,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   axiosAuth.interceptors.response.use(
     (response) => response,
     (error) =>
-      Promise.reject((error.response && error.response.data) || "Wrong Services")
+      Promise.reject((error.response && error.response.data) || "Wrong S)
   );
 
   return {

@@ -4,7 +4,7 @@ import axios from '@/utils/axios';
 import axiosServices from '@/utils/axiosServices';
 const router = useRouter();
 const listGraphql = `{
-    regions{
+    regions(sort:[ID_ASC]){
       edges{
         node{
           id
@@ -38,25 +38,25 @@ export const useregionStore = defineStore({
             }
         } */
         async fetchregions() {
-            /* try {
+            try {
                 const response = await axiosServices.post('/map/graphql/',{query:listGraphql});
-                this.regions = response.data?.data?.controlOrgans?.edges
-                console.log("Liste des region ++++++++++++", response)
+                this.regions = response.data?.data?.regions?.edges
+                console.log("Liste des regions ++++++++++++", response)
             } catch (error) {
                 alert(error);
                 console.log(error);
-            } */
+            }
         },
         async addregions(payload:any) {
           try {
               const response = await axiosServices.post('/map/graphql/',
               {
                   query:`mutation{
-                      registerControlOrgan(address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
+                      registerRegion(countryId:"${payload.countryId}",name:"${payload.name}",code:"${payload.code}"){
                           code
                           message
                           success
-                          controlOrgan{
+                          region{
                             id
                             name
                           }
@@ -77,14 +77,14 @@ export const useregionStore = defineStore({
               const response = await axiosServices.post('/map/graphql/',
               {
                   query:`mutation{
-                      updateControlOrgan(identifier:"${parseInt(payload.id)}",isActive:"${payload.isActive}",ownerId:"${payload.ownerId}",address:"${payload.address}",countryId:"${payload.countryId}",departementId:"${payload.departementId}",regionId:"${payload.regionId}",name:"${payload.name}",phone:"${payload.phone}",picture:"${payload.picture}"){
+                      updateRegion(id:"${parseInt(payload.id)}",countryId:"${payload.countryId}",name:"${payload.name}",code:"${payload.code}"){
                           code
                           message
                           success
-                          country{
+                          region{
                               id
                               name
-                              isoCode
+                              code
                           }
                       }
                       
@@ -103,7 +103,7 @@ export const useregionStore = defineStore({
               const response = await axiosServices.post('/map/graphql/',
               {
                   query:`mutation{
-                      deleteControlOrgan(identifier:"${parseInt(payload.id)}"){
+                      deleteRegion(id:"${parseInt(payload.id)}"){
                           code
                           message
                           success

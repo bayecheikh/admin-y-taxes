@@ -19,7 +19,7 @@ const getpayss: any = computed(() => {
 const listpayss = ref(getpayss)
 
 
-const selectedPays = ref({})
+const selectedPays = null
 const selectedRegion = ref({})
 
 const valid = ref(true);
@@ -78,6 +78,10 @@ function save() {
     close();
 }
 
+
+const changePays = () => {
+  console.log(selectedPays)
+}
 //Computed Property
 const formTitle = computed(() => {
     return editedIndex.value === -1 ? 'Ajouter un organe de contrôle' : 'Modifier un organe de contrôle';
@@ -122,15 +126,15 @@ const formTitle = computed(() => {
                                
                                 <v-col cols="12" sm="12">
                                     <v-autocomplete 
-                                        :v-model="selectedPays"
+                                        :v-model:selectedPays="selectedPays"
                                         :items="listpayss" 
                                         color="primary" 
                                         label="Pays"
                                         item-title="node.name"
                                         item-value="node.id"
-                                        
+                                        @update:selectedPays="changePays"
                                         variant="outlined"
-                                       
+                                       return-object
                                         hide-details>
                                         </v-autocomplete>
                                 </v-col>
