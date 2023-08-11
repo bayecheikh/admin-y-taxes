@@ -1,0 +1,48 @@
+{
+  "role":"admin",
+  "homePage":"/dashboard",
+  "menuItems":[
+    {
+      "icon": "mdi-view-dashboard-outline",
+      "href": "/dashboard",
+      "title": "Tableau de bord",
+      "name":"voir-dashboard"
+    },
+    {
+      "icon": "mdi-account-group-outline",
+      "href": "/utilisateurs",
+      "title": "Utilisateurs",
+      "name": "gerer-utilisateurs"
+    },
+    {
+      "icon": "mdi-home-city-outline",
+      "href": "/structures",
+      "title": "Structures",
+      "name": "gerer-structures"
+    },
+    {
+      "icon": "mdi-home-city-outline",
+      "href": "/investissements",
+      "title": "Financements",
+      "name": "gerer-investissements"
+    },
+    {
+      "icon": "mdi-home-city-outline",
+      "href": "/investissements/traitement",
+      "title": "Traitement de données",
+      "name": "gerer-investissements"
+    },
+    {
+      "icon": "mdi-file-document-outline",
+      "href": "/demandes",
+      "title": "Demandes",
+      "name":"gerer-demandes"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/parametres",
+      "title": "Paramétrage",
+      "name": "gerer-parametres"
+    }
+  ]
+ }

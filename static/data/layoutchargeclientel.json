@@ -1,0 +1,36 @@
+{
+  "role":"charge_clientel",
+  "homePage":"/dashboard/charge-clientel",
+  "menuItems":[
+   {
+     "icon": "mdi-view-dashboard-outline",
+     "href": "/dashboard/charge-clientel",
+     "title": "Tableau de bord",
+     "name":"voir_dashboard"
+   },
+   {
+     "icon": "mdi-file-document-outline",
+     "href": "/demandes",
+     "title": "Demandes",
+     "name":"gerer_dossiers"
+   },
+   {
+     "icon": "mdi-account-group-outline",
+     "href": "/usagers",
+     "title": "Usagers",
+     "name":"gerer_usagers"
+   },
+   {
+     "icon": "mdi-chart-box-outline",
+     "href": "/statistiques",
+     "title": "Statistiques",
+     "name":"voir_statistique"
+   },
+   {
+     "icon": "mdi-text",
+     "href": "/modules",
+     "title": "Modules",
+     "name":"gerer_modules"
+   }
+  ]
+ }

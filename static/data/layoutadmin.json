@@ -1,0 +1,96 @@
+{
+  "role":"admin",
+  "homePage":"/dashboard",
+  "menuItems":[
+    {
+      "icon": "mdi-account-lock-outline",
+      "href": "/roles",
+      "title": "Role",
+      "name": "gerer-roles"
+    },
+    {
+      "icon": "mdi-account-lock-outline",
+      "href": "/permissions",
+      "title": "Permissions",
+      "name": "gerer-permissions"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/departements",
+      "title": "Districts",
+      "name": "gerer-departements"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/regions",
+      "title": "Regions",
+      "name": "gerer-regions"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/dimensions",
+      "title": "Dimensions",
+      "name": "gerer-dimensions"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/modefinancements",
+      "title": "Modes de financement",
+      "name": "gerer-modefinancements"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/type-zones",
+      "title": "Type Zone",
+      "name": "gerer-type-zones"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/typesources",
+      "title": "Sous Type de structure",
+      "name": "gerer-type-sources"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/sources",
+      "title": "Type de structure",
+      "name": "gerer-source-financement"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/bailleurs",
+      "title": "Bailleurs",
+      "name": "gerer-bailleurs"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/piliers",
+      "title": "Piliers",
+      "name": "gerer-piliers"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/axes",
+      "title": "Axes",
+      "name": "gerer-axes"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/typelignes",
+      "title": "Type Ligne",
+      "name": "gerer-typelignes"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/annees",
+      "title": "Années",
+      "name": "gerer-annees"
+    },
+    {
+      "icon": "mdi-cog-outline",
+      "href": "/monnaies",
+      "title": "Monnaies",
+      "name": "gerer-monnaies"
+    }
+  ]
+ }
